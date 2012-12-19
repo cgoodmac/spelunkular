@@ -1,0 +1,5 @@
+$('#results').empty();
+
+<% Photo.all.each do |photo| %>
+  $('#results').prepend('<div class="photo"><%= image_tag photo.photo_url %></div>');
+<% end %>
