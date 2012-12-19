@@ -3,6 +3,6 @@ class Photo < ActiveRecord::Base
 
   def get_images(celeb_name)
     celeb_name = celeb_name.downcase.gsub(' ','-')
-    seed_url = "http://www.thesuperficial.com/tag/#{celeb_name}/news"
+    seed_url = "http://www.usmagazine.com/celebrities/#{celeb_name}"
   end
 end
