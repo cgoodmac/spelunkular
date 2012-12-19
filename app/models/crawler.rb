@@ -18,13 +18,11 @@ def get_urls(depth, seed_url) #returns array of urls
     #Getting the images from each URL we crawled.
     get_images(urls)
 
-<<<<<<< HEAD
       urls.scan(regex_url).each do |url|
         urls << URI.parse(url).relative? ? "http://www.usmagazine.com" + url : url
       end
       
       depth -= 1
-=======
     #Crawling each URL we were given.
     urls.each do |url|
       new_urls << HTTParty.get(url).scan(regex_url)
@@ -36,7 +34,6 @@ def get_urls(depth, seed_url) #returns array of urls
     #Check to see if we have an asolute URL.
     new_urls.each do |url|
       urls << URI.parse(url).relative? ? "http://www.usmagazine.com" + url : url
->>>>>>> 57792e7bee7d3b7e55d391da8389671cb5a574f6
     end
 
     #Clearing out this new array so we don't double crawl.
