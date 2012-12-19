@@ -1,0 +1,9 @@
+%h1 Spelunkular
+
+#form
+  =form_tag '/', :remote => true do
+    =text_field_tag 'url', nil, :placeholder => "URL"
+    =number_field_tag 'depth', nil, :placeholder => "Depth"
+    =submit_tag 'Go!'
+
+#results
