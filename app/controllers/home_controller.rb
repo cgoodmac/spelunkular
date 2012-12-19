@@ -9,7 +9,6 @@ class HomeController < ApplicationController
     depth = params[:depth]
     seed_url = "http://www.usmagazine.com/celebrities/#{celeb_name}"
 
-    
   end
 
 end
