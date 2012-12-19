@@ -2,7 +2,6 @@ class Crawler
 
 def get_images(urls) #takes array of urls
     regex_img=/<img .*?src.*?['"]([^'"]*).*?>\w*/m
-
     urls.each do |url|
       result = HTTParty.get(url)
       #.scan returns an array of arrays with length 1

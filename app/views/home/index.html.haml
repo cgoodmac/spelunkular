@@ -1,8 +1,9 @@
 %h1 Spelunkular
+%h2 Spelunk for hot celeb pics!
 
 #form
   =form_tag '/', :remote => true do
-    =text_field_tag 'celeb', nil, :placeholder => "Enter a celebrity name!"
+    =text_field_tag 'celeb', nil, :placeholder => "Enter a celebrity name!", :class => 'celeb'
     =number_field_tag 'depth', nil, :placeholder => "Depth"
     =submit_tag 'Go!'
 
