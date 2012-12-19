@@ -9,8 +9,18 @@ def get_images(urls) #takes array of urls
   end
 
   def get_urls(depth, seed_url) #returns array of urls
-    url = []
-    #<a .*?href.*?['"]([^'"]+)['"]>
+    urls = [seed_url]
+    regex_url = /<a .*?href.*?['"]([^'"]+)['"]>/m
+
+    while depth > 0
+      get_images(urls)
+
+      urls.scan(regex_url).each do |url|
+        urls << URI.parase(url).relative? ? "http://www.usmagazine.com" + url : url
+      end
+
+      depth -= 1
+    end
   end
 
 end
