@@ -18,7 +18,7 @@ def get_images(urls) #takes array of urls
       urls.scan(regex_url).each do |url|
         urls << URI.parase(url).relative? ? "http://www.usmagazine.com" + url : url
       end
-
+      
       depth -= 1
     end
   end
