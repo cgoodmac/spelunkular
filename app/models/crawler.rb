@@ -3,9 +3,12 @@ class Crawler
 def get_images(urls, search_term) #takes array of urls
   regex_img=/<img .*?src.*?['"]([^'"]*).*?>\w*/m
   urls.each do |url|
-    result = HTTParty.get(url)
-    #.scan returns an array of arrays with length 1
-    result.scan(regex_img).each{|pic| Photo.create(:photo_url => pic[0]), :search_term => search_term}
+    begin
+      result = HTTParty.get(url)
+      #.scan returns an array of arrays with length 1
+      result.scan(regex_img).each{|pic| Photo.create(:photo_url => pic[0], :search_term => search_term)}
+    rescue
+    end
   end
 end
 
@@ -19,6 +22,7 @@ def get_urls(depth, seed_url, search_term) #returns array of urls
     #Getting the images from each URL we crawled.
     get_images(urls, search_term)
 
+    puts urls
     #Crawling each URL we were given.
     urls.each do |url|
       begin
@@ -30,12 +34,16 @@ def get_urls(depth, seed_url, search_term) #returns array of urls
     #Clearing this so we don't double crawl.
     urls = []
 
-    #Check to see if we have an asolute URL.
+    #Check to see if we have an absolute URL.
     new_urls.each do |url_group|
       url_group.each do |url|
         begin
-          puts "Adding URL: #{url[0]}"
-          urls << URI.parse(url[0]).relative? ? "http://www.usmagazine.com/#{url[0]}" : url
+          begin
+          new_url = URI.parse(url[0]).relative? ? "http://www.usmagazine.com/#{url[0]}" : url
+          puts new_url
+          urls << new_url
+          rescue
+          end
         rescue
         end
       end
