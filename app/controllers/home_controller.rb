@@ -14,8 +14,7 @@ class HomeController < ApplicationController
 
 
     crawler = Crawler.new
-    crawler.get_urls(depth, seed_url)
-    # crawler.get_images(urls)
+    crawler.get_urls(depth, seed_url, celeb_name)
 
   end
 

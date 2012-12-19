@@ -1,18 +1,15 @@
 class Crawler
 
-def get_images(urls) #takes array of urls
-
-  binding.pry
-  
+def get_images(urls, search_term) #takes array of urls
   regex_img=/<img .*?src.*?['"]([^'"]*).*?>\w*/m
   urls.each do |url|
     result = HTTParty.get(url)
     #.scan returns an array of arrays with length 1
-    result.scan(regex_img).each{|pic| Photo.create(:photo_url => pic[0])}
+    result.scan(regex_img).each{|pic| Photo.create(:photo_url => pic[0], :search_term => search_term)}
   end
 end
 
-def get_urls(depth, seed_url) #returns array of urls
+def get_urls(depth, seed_url, search_term) #returns array of urls
   urls = [seed_url]
   new_urls = []
   regex_url = /<a .*?href.*?['"]([^'"]+)['"]>/m
@@ -20,13 +17,8 @@ def get_urls(depth, seed_url) #returns array of urls
   while depth > 0
     puts "Getting urls: #{urls.count}"
     #Getting the images from each URL we crawled.
-    get_images(urls)
+    get_images(urls, search_term)
 
-      urls.scan(regex_url).each do |url|
-        urls << URI.parse(url).relative? ? "http://www.usmagazine.com" + url : url
-      end
-      
-      depth -= 1
     #Crawling each URL we were given.
     urls.each do |url|
       begin
